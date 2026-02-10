@@ -1,0 +1,29 @@
+<div class="card usuario-card mb-4">
+
+  <div class="avatar">
+    <img [src]="heroe.image1" alt="avatar">
+  </div>
+
+  <div class="card-cuerpo text-center">
+    <h6 class="card-titulo">
+      {{ heroe.fullname }} {{ heroe.name }}
+    </h6>
+
+    <hr>
+
+    <div class="acciones">
+      <button [routerLink]="['/home/heroe', heroe.id]" type="button" class="icon-btn">
+        🔍
+      </button>
+
+      <button [routerLink]="['/home/form', heroe.id]" type="button" class="icon-btn" title="Actualizar">
+        🔄
+      </button>
+
+      <button class="icon-btn delete" (click)="eliminarHeroe()" title="Eliminar">
+        🗑
+      </button>
+    </div>
+  </div>
+
+</div>
