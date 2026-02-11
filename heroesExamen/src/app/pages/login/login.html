@@ -1,0 +1,36 @@
+<div class="container d-flex justify-content-center align-items-center vh-100">
+    <div class="card p-4 shadow-lg" style="width: 22rem;">
+        <div class="text-center mb-4">
+            <h2 class="text-primary">DC Universe</h2>
+            <p class="text-muted">Login to access the database</p>
+        </div>
+        <form #loginForm="ngForm" (ngSubmit)="getUsuario(loginForm)">
+            <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" 
+                       class="form-control" 
+                       id="username" 
+                       name="username" 
+                       ngModel 
+                       required 
+                       placeholder="Enter your username">
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" 
+                       class="form-control" 
+                       id="password" 
+                       name="password" 
+                       ngModel 
+                       required 
+                       placeholder="Enter your password">
+            </div>
+            <div class="d-grid">
+                <button type="submit" class="btn btn-primary" [disabled]="!loginForm.valid">Login</button>
+            </div>
+        </form>
+        <div class="text-center mt-3">
+            <a routerLink="/landingPage" class="text-decoration-none">Back to Landing Page</a>
+        </div>
+    </div>
+</div>

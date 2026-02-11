@@ -1,9 +1,9 @@
 import { Router, RouterLink } from '@angular/router';
-import { routes } from './../../app.routes';
 import { ServiceUsuario } from './../../service/service-usuario';
 import { Component, inject } from '@angular/core';
-import { InterfaceUsuario } from '../../interface/interface-usuario';
+import { LoginRequest } from '../../interface/interface-login';
 import { FormsModule, NgForm } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -12,32 +12,37 @@ import { FormsModule, NgForm } from '@angular/forms';
   styleUrl: './login.css',
 })
 export class Login {
-  private ServiceUsuario = inject(ServiceUsuario)
+  private serviceUsuario = inject(ServiceUsuario)
   private router = inject(Router)
 
   ngOnInit(): void {
-    if (localStorage.getItem('accessToken')) {
+    if (this.serviceUsuario.isLoggedIn()) {
       this.router.navigate(['/home']);
     }
   }
 
   async getUsuario(loginForm: NgForm) {
-    const loginUser: InterfaceUsuario = loginForm.value as InterfaceUsuario;
+    const loginUser: LoginRequest = loginForm.value as LoginRequest;
 
     try {
-      let response = await this.ServiceUsuario.login(loginUser);
+      const response = await this.serviceUsuario.login(loginUser);
 
-      if (response.accessToken) {
-        localStorage.setItem("accessToken", response.accessToken);
-
-        localStorage.setItem("user", JSON.stringify(response.user))
-
-        this.router.navigate(['/landingPage']);
+      if (response && response.token) {
+        Swal.fire({
+          title: "Success!",
+          text: "Welcome back!",
+          icon: "success"
+        });
+        this.router.navigate(['/home']);
         loginForm.reset();
       }
-    }catch (error) {
-    alert("credenciales incorrectos"); 
-    loginForm.reset();
+    } catch (error) {
+      Swal.fire({
+        title: "Error!",
+        text: "Invalid username or password",
+        icon: "error"
+      });
+      loginForm.reset();
     }
   }
 

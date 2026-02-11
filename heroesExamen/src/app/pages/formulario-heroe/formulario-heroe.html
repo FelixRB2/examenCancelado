@@ -1,1 +1,98 @@
-<p>formulario-heroe works!</p>
+<div class="container mt-5 mb-5">
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+            <h3>{{ isEditMode ? 'Edit Hero' : 'Create New Hero' }}</h3>
+        </div>
+        <div class="card-body">
+            <form [formGroup]="heroForm" (ngSubmit)="submit()">
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Hero Name</label>
+                        <input type="text" class="form-control" formControlName="heroname" placeholder="e.g. Superman">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" class="form-control" formControlName="fullname"
+                            placeholder="e.g. Clark Kent">
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Gender</label>
+                    <select class="form-select" formControlName="gender">
+                        <option value="">Select Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Race</label>
+                        <input type="text" class="form-control" formControlName="race" placeholder="e.g. Kryptonian">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Alignment</label>
+                        <select class="form-select" formControlName="alignment">
+                            <option value="">Select Alignment</option>
+                            <option value="good">Good</option>
+                            <option value="bad">Bad</option>
+                            <option value="neutral">Neutral</option>
+                        </select>
+                    </div>
+                </div>
+
+                <h5 class="mt-4 border-bottom pb-2">Images</h5>
+                <div class="mb-3">
+                    <label class="form-label">Image 1 URL (Main)</label>
+                    <input type="text" class="form-control" formControlName="image1">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Image 2 URL</label>
+                    <input type="text" class="form-control" formControlName="image2">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Image 3 URL</label>
+                    <input type="text" class="form-control" formControlName="image3">
+                </div>
+
+                <h5 class="mt-4 border-bottom pb-2">Powerstats (0-100)</h5>
+                <div formGroupName="powerstats">
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <label class="form-label">Intelligence</label>
+                            <input type="number" class="form-control" formControlName="intelligence" min="0" max="100">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Strength</label>
+                            <input type="number" class="form-control" formControlName="strength" min="0" max="100">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Speed</label>
+                            <input type="number" class="form-control" formControlName="speed" min="0" max="100">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Durability</label>
+                            <input type="number" class="form-control" formControlName="durability" min="0" max="100">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Power</label>
+                            <input type="number" class="form-control" formControlName="power" min="0" max="100">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Combat</label>
+                            <input type="number" class="form-control" formControlName="combat" min="0" max="100">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4 d-flex justify-content-end">
+                    <a routerLink="/home" class="btn btn-secondary me-2">Cancel</a>
+                    <button type="submit" class="btn btn-primary" [disabled]="heroForm.invalid">Save Hero</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

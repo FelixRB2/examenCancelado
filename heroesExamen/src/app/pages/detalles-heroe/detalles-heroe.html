@@ -1,1 +1,112 @@
-<p>detalles-heroe works!</p>
+<div class="container mt-5" *ngIf="hero">
+    <div class="card shadow-lg">
+        <div class="row g-0">
+            <div class="col-md-4">
+                <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active" *ngIf="hero.image1">
+                            <img [src]="hero.image1" class="d-block w-100 rounded-start" alt="{{hero.heroname}}"
+                                style="height: 500px; object-fit: cover;">
+                        </div>
+                        <div class="carousel-item" *ngIf="hero.image2">
+                            <img [src]="hero.image2" class="d-block w-100 rounded-start" alt="{{hero.heroname}}"
+                                style="height: 500px; object-fit: cover;">
+                        </div>
+                        <div class="carousel-item" *ngIf="hero.image3">
+                            <img [src]="hero.image3" class="d-block w-100 rounded-start" alt="{{hero.heroname}}"
+                                style="height: 500px; object-fit: cover;">
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel"
+                        data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel"
+                        data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h1 class="card-title display-4 text-primary">{{hero.heroname}}</h1>
+                    <h4 class="text-muted mb-4">{{hero.fullname}}</h4>
+
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <p><strong>Gender:</strong> {{hero.gender}}</p>
+                            <p><strong>Race:</strong> {{hero.race}}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Alignment:</strong> <span class="badge"
+                                    [class.bg-success]="hero.alignment === 'good'"
+                                    [class.bg-danger]="hero.alignment === 'bad'"
+                                    [class.bg-secondary]="hero.alignment === 'neutral'">{{hero.alignment}}</span></p>
+                        </div>
+                    </div>
+
+                    <h3 class="mb-3">Powerstats</h3>
+
+                    <div class="mb-2">
+                        <label>Intelligence</label>
+                        <div class="progress">
+                            <div class="progress-bar bg-info" role="progressbar"
+                                [style.width.%]="hero.powerstats.intelligence"
+                                [attr.aria-valuenow]="hero.powerstats.intelligence" aria-valuemin="0"
+                                aria-valuemax="100">{{hero.powerstats.intelligence}}%</div>
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        <label>Strength</label>
+                        <div class="progress">
+                            <div class="progress-bar bg-danger" role="progressbar"
+                                [style.width.%]="hero.powerstats.strength"
+                                [attr.aria-valuenow]="hero.powerstats.strength" aria-valuemin="0" aria-valuemax="100">
+                                {{hero.powerstats.strength}}%</div>
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        <label>Speed</label>
+                        <div class="progress">
+                            <div class="progress-bar bg-warning" role="progressbar"
+                                [style.width.%]="hero.powerstats.speed" [attr.aria-valuenow]="hero.powerstats.speed"
+                                aria-valuemin="0" aria-valuemax="100">{{hero.powerstats.speed}}%</div>
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        <label>Durability</label>
+                        <div class="progress">
+                            <div class="progress-bar bg-success" role="progressbar"
+                                [style.width.%]="hero.powerstats.durability"
+                                [attr.aria-valuenow]="hero.powerstats.durability" aria-valuemin="0" aria-valuemax="100">
+                                {{hero.powerstats.durability}}%</div>
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        <label>Power</label>
+                        <div class="progress">
+                            <div class="progress-bar bg-primary" role="progressbar"
+                                [style.width.%]="hero.powerstats.power" [attr.aria-valuenow]="hero.powerstats.power"
+                                aria-valuemin="0" aria-valuemax="100">{{hero.powerstats.power}}%</div>
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        <label>Combat</label>
+                        <div class="progress">
+                            <div class="progress-bar bg-dark" role="progressbar"
+                                [style.width.%]="hero.powerstats.combat" [attr.aria-valuenow]="hero.powerstats.combat"
+                                aria-valuemin="0" aria-valuemax="100">{{hero.powerstats.combat}}%</div>
+                        </div>
+                    </div>
+
+                    <div class="mt-4">
+                        <a routerLink="/home" class="btn btn-outline-secondary">Back to List</a>
+                        <a [routerLink]="['/home/formulario', hero.id]" class="btn btn-warning ms-2">Edit Hero</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
