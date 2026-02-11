@@ -1,6 +1,19 @@
+/* Estilos específicos para la vista de Login */
+
 .container {
+    /* Fondo gris claro para resaltar la tarjeta de login blanco */
     background-color: #f8f9fa;
-    /* Light gray background */
+    /* Aseguramos que ocupe todo el ancho y alto del viewport */
     min-width: 100vw;
     min-height: 100vh;
+}
+
+/* Efecto de elevación para la tarjeta al pasar el ratón (opcional) */
+.card {
+    transition: transform 0.3s ease;
+    border: none;
+}
+
+.card:hover {
+    transform: translateY(-5px);
 }

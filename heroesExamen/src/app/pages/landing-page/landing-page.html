@@ -1,33 +1,40 @@
+<!-- Pantalla de Bienvenida (Landing Page) -->
 <div class="landing-container">
+    <!-- Capa de oscurecimiento para mejorar la legibilidad del texto sobre la imagen de fondo -->
     <div class="overlay"></div>
+
     <div class="content">
+        <!-- Logo de marca estilo DC -->
         <div class="logo-container">
             <span class="dc-logo">DC</span> UNIVERSE
         </div>
-        <h1 class="main-title">Heroes Database</h1>
-        <p class="subtitle">Welcome to the management system for DC heroes and villains.</p>
 
+        <h1 class="main-title">Base de Datos de Héroes</h1>
+        <p class="subtitle">Bienvenido al sistema de gestión de héroes y villanos de DC.</p>
+
+        <!-- Botón de Acción Principal (Call to Action) -->
         <div>
             <a routerLink="/login" class="cta-button">
-                Login to Dashboard
+                Acceder al Panel
             </a>
         </div>
 
+        <!-- Sección de características destacadas -->
         <div class="features">
             <div class="feature-item">
                 <i class="bi bi-shield-shaded"></i>
-                <h3>Heroes</h3>
-                <p>Manage hero profiles.</p>
+                <h3>Héroes</h3>
+                <p>Gestiona perfiles de héroes.</p>
             </div>
             <div class="feature-item">
                 <i class="bi bi-graph-up"></i>
                 <h3>Stats</h3>
-                <p>View power statistics.</p>
+                <p>Ver estadísticas de poder.</p>
             </div>
             <div class="feature-item">
                 <i class="bi bi-gear-fill"></i>
                 <h3>Admin</h3>
-                <p>Create and edit data.</p>
+                <p>Crea y edita datos.</p>
             </div>
         </div>
     </div>

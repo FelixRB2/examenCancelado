@@ -1,10 +1,12 @@
 import { Component, inject } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { ServiceUsuario } from '../../service/service-usuario';
+import { Footer } from '../../components/footer/footer';
 
 @Component({
   selector: 'app-home',
-  imports: [RouterOutlet, RouterLink],
+  standalone: true,
+  imports: [RouterOutlet, RouterLink, Footer],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })

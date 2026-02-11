@@ -34,9 +34,8 @@ public class Characters {
     @Column(name = "alignment")
     private String alignment;
 
-    @OneToOne(mappedBy = "characters", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "characters", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonManagedReference
     private Powerstats powerstats;
-
 
 }

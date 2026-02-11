@@ -1,25 +1,32 @@
+<!-- Tarjeta de héroe simplificada (Componente reutilizable) -->
 <div class="card usuario-card mb-4">
 
+  <!-- Avatar/Imagen del personaje -->
   <div class="avatar">
     <img [src]="heroe.image1" alt="avatar">
   </div>
 
   <div class="card-cuerpo text-center">
+    <!-- Nombre real y nombre de héroe combinados -->
     <h6 class="card-titulo">
       {{ heroe.fullname }} {{ heroe.heroname }}
     </h6>
 
     <hr>
 
+    <!-- Acciones rápidas representadas por emojis/iconos -->
     <div class="acciones">
-      <button [routerLink]="['/home/heroe', heroe.id]" type="button" class="icon-btn">
+      <!-- Ver detalles completos -->
+      <button [routerLink]="['/home/heroe', heroe.id]" type="button" class="icon-btn" title="Ver detalles">
         🔍
       </button>
 
+      <!-- Ir al formulario de actualización -->
       <button [routerLink]="['/home/form', heroe.id]" type="button" class="icon-btn" title="Actualizar">
         🔄
       </button>
 
+      <!-- Accionar eliminación (Suele llamar a un Swal de confirmación) -->
       <button class="icon-btn delete" (click)="eliminarHeroe()" title="Eliminar">
         🗑
       </button>

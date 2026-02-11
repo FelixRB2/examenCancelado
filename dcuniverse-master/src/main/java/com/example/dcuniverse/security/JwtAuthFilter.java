@@ -17,7 +17,6 @@ import java.io.IOException;
 
 @Component
 @AllArgsConstructor
-@lombok.extern.log4j.Log4j2
 public class JwtAuthFilter extends OncePerRequestFilter {
 
     private  JwtUtil jwtUtil;
@@ -26,48 +25,44 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
-        
-        log.debug("Processing request: {} {}", request.getMethod(), request.getRequestURI());
 
+        String path = request.getRequestURI();
+
+        // ✅ Dejar pasar siempre OPTIONS (CORS preflight)
         if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
-            log.debug("Bypassing OPTIONS request");
+            response.setStatus(HttpServletResponse.SC_OK);
+            return;
+        }
+
+
+        // ✅ Rutas públicas
+        if (path.startsWith("/api/login") || path.startsWith("/api/characters")) {
             filterChain.doFilter(request, response);
             return;
         }
 
-        try {
-            final String authHeader = request.getHeader("Authorization");
-            String username = null;
-            String jwtToken = null;
+        final String authHeader = request.getHeader("Authorization");
+        String username = null;
+        String jwtToken = null;
 
-            if (authHeader != null && authHeader.startsWith("Bearer ")) {
-                jwtToken = authHeader.substring(7);
-                log.debug("Token found in header: {}", jwtToken);
-                username = jwtUtil.extractUsername(jwtToken);
-                log.debug("Extracted username: {}", username);
-            } else {
-                log.debug("No Bearer token found in Authorization header");
-            }
-
-            if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-
-                if (jwtUtil.isTokenValid(jwtToken, userDetails.getUsername())) {
-                    log.debug("Token is valid for user: {}", username);
-                    var authToken = new UsernamePasswordAuthenticationToken(
-                            userDetails, null, userDetails.getAuthorities()
-                    );
-                    authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                    SecurityContextHolder.getContext().setAuthentication(authToken);
-                    log.debug("Authentication set for user: {}", username);
-                } else {
-                    log.debug("Token is INVALID for user: {}", username);
-                }
-            }
-
-        } catch (Exception e) {
-            log.error("Error during JWT validation: {}", e.getMessage());
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            jwtToken = authHeader.substring(7);
+            username = jwtUtil.extractUsername(jwtToken);
         }
+
+        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+
+            if (jwtUtil.isTokenValid(jwtToken, userDetails.getUsername())) {
+                var authToken = new UsernamePasswordAuthenticationToken(
+                        userDetails, null, userDetails.getAuthorities()
+                );
+                authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                SecurityContextHolder.getContext().setAuthentication(authToken);
+            }
+        }
+
         filterChain.doFilter(request, response);
     }
+
 }

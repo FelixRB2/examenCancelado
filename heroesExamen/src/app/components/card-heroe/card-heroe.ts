@@ -11,53 +11,57 @@ import Swal from 'sweetalert2';
   styleUrl: './card-heroe.css',
 })
 export class CardHeroe {
+  // Inyección de servicios
   ServiceHeroes = inject(ServiceHeroes);
   Router = inject(Router);
   activatedRoute = inject(ActivatedRoute);
 
+  // Entrada de datos del héroe desde el padre (ListHeroes)
   @Input() heroe!: InterfaceHeroe;
+  // Evento de salida para notificar cambios (opcional en este flujo)
   @Output() delete = new EventEmitter<InterfaceHeroe>();
 
   ngOnInit(): void {
-    //Usando el endpoint específico para obtener usuario por id
+    // Suscripción a cambios de parámetros en caso de que este componente 
+    // se usara de forma independiente por ruta (legacy support).
     this.activatedRoute.params.subscribe(async (params: any) => {
-
-      //!id: string si uuid numer si id simple
       let id: string = params.id
-
       if (id != undefined) {
-        let response = await this.ServiceHeroes.getHeroeById(id);
+        await this.ServiceHeroes.getHeroeById(id);
       }
-
     });
-
   }
 
+  /**
+   * Ejecuta la eliminación de un héroe con diálogo de confirmación.
+   */
   async eliminarHeroe() {
-
     const result = await Swal.fire({
       title: `¿Quieres eliminar a ${this.heroe.heroname}?`,
-      text: "No podrás revertir esto",
+      text: "Esta acción no se puede deshacer de forma sencilla",
       icon: "warning",
       showCancelButton: true,
       cancelButtonText: "Cancelar",
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Eliminar"
+      confirmButtonText: "Sí, eliminar"
     });
 
     if (result.isConfirmed) {
       if (this.heroe.id) {
-        await this.ServiceHeroes.deleteHeroe(this.heroe.id);
+        try {
+          // Llamada al servicio para borrar en el backend
+          await this.ServiceHeroes.deleteHeroe(this.heroe.id);
+          Swal.fire({
+            title: "Eliminado",
+            text: `Has eliminado a ${this.heroe.heroname} con éxito`,
+            icon: "success"
+          });
+          // Nota: El componente ListHeroes recarga la lista tras la confirmación de borrado.
+        } catch (error) {
+          Swal.fire("Error", "No se pudo eliminar al héroe", "error");
+        }
       }
-
-      Swal.fire({
-        title: "Eliminado",
-        text: `Has eliminado a ${this.heroe.heroname}`,
-        icon: "success"
-      });
     }
-
   }
-
 }

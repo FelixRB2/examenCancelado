@@ -1,31 +1,58 @@
+<!-- Listado Principal de Héroes -->
 <div class="container mt-5">
+    <!-- Cabecera con título y botón de creación -->
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="text-primary">Heroes Database</h1>
-        <a routerLink="/home/nuevoHeroe" class="btn btn-success">+ Create Hero</a>
+        <h1 class="text-primary">Base de Datos de Héroes</h1>
+        <a routerLink="/home/nuevoHeroe" class="btn btn-success">+ Añadir Héroe</a>
     </div>
 
+    <!-- Rejilla de Héroes (Angular 18 @for) -->
     <div class="row row-cols-1 row-cols-md-3 g-4">
-        <div class="col" *ngFor="let hero of heroes">
+        <!-- Iteramos sobre la lista de héroes recuperada del backend -->
+        @for (hero of listaHeroes; track hero.id) {
+        <div class="col">
+            <!-- Tarjeta individual del héroe con efecto hover -->
             <div class="card h-100 shadow-sm hover-effect">
                 <img [src]="hero.image1" class="card-img-top" alt="{{hero.heroname}}"
                     style="height: 300px; object-fit: cover;">
                 <div class="card-body">
                     <h5 class="card-title text-center fw-bold">{{hero.heroname}}</h5>
                     <p class="card-text text-muted text-center">{{hero.fullname}}</p>
+
+                    <!-- Botonera de acciones para cada héroe -->
                     <div class="d-flex justify-content-between mt-3">
-                        <a [routerLink]="['/home/heroe', hero.id]" class="btn btn-info text-white btn-sm">Details</a>
+                        <a [routerLink]="['/home/heroe', hero.id]" class="btn btn-info text-white btn-sm">Detalles</a>
                         <a [routerLink]="['/home/formulario', hero.id]"
-                            class="btn btn-warning text-white btn-sm">Edit</a>
-                        <button (click)="deleteHero(hero.id)" class="btn btn-danger btn-sm">Delete</button>
+                            class="btn btn-warning text-white btn-sm">Editar</a>
+                        <button (click)="deleteHero(hero.id)" class="btn btn-danger btn-sm">Eliminar</button>
                     </div>
                 </div>
             </div>
         </div>
+        } @empty {
+        <!-- Bloque que se muestra automáticamente si la lista de héroes está vacía -->
+        <div class="col-12 text-center py-5">
+            <p class="text-muted">No se han encontrado héroes en la base de datos.</p>
+        </div>
+        }
     </div>
 
+    <!-- CONTROLES DE PAGINACIÓN -->
+    <!-- Se usan vinculaciones de datos (Data Binding) para hacer la interfaz interactiva -->
     <div class="d-flex justify-content-center mt-4 mb-5">
-        <button class="btn btn-secondary me-2" (click)="prevPage()" [disabled]="currentPage === 0">Previous</button>
-        <span class="align-self-center mx-3">Page {{currentPage + 1}} of {{totalPages}}</span>
-        <button class="btn btn-primary" (click)="nextPage()" [disabled]="isLastPage">Next</button>
+
+        <!-- Botón Anterior: Se deshabilita automáticamente si estamos en la página 0 -->
+        <button class="btn btn-secondary me-2" (click)="prevPage()" [disabled]="currentPage === 0">
+            Anterior
+        </button>
+
+        <!-- Indicador de progreso: Muestra la página actual (sumamos 1 porque el contador interno empieza en 0) -->
+        <span class="align-self-center mx-3">Página {{currentPage + 1}} de {{totalPages}}</span>
+
+        <!-- Botón Siguiente: Se deshabilita si el servidor nos dice que 'isLastPage' es true -->
+        <button class="btn btn-primary" (click)="nextPage()" [disabled]="isLastPage">
+            Siguiente
+        </button>
+
     </div>
 </div>

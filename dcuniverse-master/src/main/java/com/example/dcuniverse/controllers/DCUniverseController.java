@@ -30,7 +30,7 @@ import java.util.Optional;
 @Log4j2
 @AllArgsConstructor
 @RequestMapping("/api")
-@SuppressWarnings({"java:S5738", "java:S4684"})
+@SuppressWarnings({ "java:S5738", "java:S4684" })
 public class DCUniverseController {
     CharacterService characterService;
     PowerStatsService powerStatsService;
@@ -40,27 +40,28 @@ public class DCUniverseController {
     private UserDetailsService userDetailsService;
     private UserService userService;
 
-    /** INFORMACION PARA EL DESARROLLADOR DEL FRONT
-
+    /**
+     * INFORMACION PARA EL DESARROLLADOR DEL FRONT
+     * 
      * Ruta para Swagger
-        http://localhost:8080/swagger-ui/index.html#
-
+     * http://localhost:8080/swagger-ui/index.html#
+     * 
      * Para el login tenemos dos usuarios
-    username:  "user"
-    password: "password"
-    Tiene el rol de USER
-
-    El otro usuario es:
-    username:  "wayne"
-    password: "soybatman"
-    Tiene el rol de ADMIN
-    */
+     * username: "user"
+     * password: "password"
+     * Tiene el rol de USER
+     * 
+     * El otro usuario es:
+     * username: "wayne"
+     * password: "soybatman"
+     * Tiene el rol de ADMIN
+     */
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request) {
         log.debug("A request has arrived to login");
-        
-        try{
+
+        try {
             UserDetails userDetails = userDetailsService.loadUserByUsername(request.getUsername());
             // Validar la contraseña
             if (userService.validatePassword(request.getPassword(), userDetails.getPassword())) {
@@ -68,16 +69,15 @@ public class DCUniverseController {
             } else {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuario o contraseña incorrectos");
             }
-        }catch (UsernameNotFoundException e) {
+        } catch (UsernameNotFoundException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuario no encontrado");
         }
     }
 
     @GetMapping(value = "/characters")
     public ResponseEntity<Page<Characters>> getCharacters2(
-            @RequestParam(name= "page", defaultValue = "0") int page,
-            @RequestParam(name= "size", defaultValue = "100") int size
-    ) {
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "100") int size) {
         log.debug("A request has arrived to get all characters");
         return ResponseEntity.ok(characterService.obtenerCharacters(page, size));
     }
@@ -95,15 +95,13 @@ public class DCUniverseController {
     }
 
     @GetMapping(value = "/characters/{id}")
-    public ResponseEntity<Characters> getCharacterById(@PathVariable("id") Long id) {
-        log.debug("A request has arrived to get character by id: {} ", id);
+    public ResponseEntity<Characters> getCharacterById(@PathVariable Long id) {
         Optional<Characters> characterOptional = characterService.findById(id);
 
         // Verificar si el personaje está presente
         if (characterOptional.isPresent()) {
-            return ResponseEntity.ok(characterOptional.get()); // Devolver el personaje encontrado con estado 200 OK
+            return ResponseEntity.ok(characterOptional.get());
         } else {
-            log.error("Character with id {} not found", id);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build(); // Devolver 404 si no se encuentra el personaje
         }
     }
@@ -144,7 +142,7 @@ public class DCUniverseController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "100") int size) {
         log.info("A request has been received to get characters with power greater than value {}", value);
-        return ResponseEntity.ok(characterService.findByPowerGreaterThan(value,PageRequest.of(page, size)));
+        return ResponseEntity.ok(characterService.findByPowerGreaterThan(value, PageRequest.of(page, size)));
     }
 
 }

@@ -1,0 +1,51 @@
+/* Estilos Premium para el Footer */
+
+.footer {
+    /* Graduado de oscuro a más oscuro para un look moderno */
+    background: linear-gradient(180deg, #1A1D20 0%, #111315 100%) !important;
+    /* Línea superior azul característica de DC/Bootstrap */
+    border-top: 4px solid #007bff;
+    box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.dc-badge {
+    /* Cuadrado azul para el logo DC */
+    background-color: #007bff;
+    color: white;
+    padding: 3px 10px;
+    font-weight: 900;
+    border-radius: 4px;
+    font-size: 1.1rem;
+    display: inline-block;
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.4);
+}
+
+.universe-text {
+    /* Texto elegante y espaciado para "Universe" */
+    font-weight: 300;
+    letter-spacing: 3px;
+    margin-left: 8px;
+    font-size: 0.95rem;
+    color: #ffffff;
+}
+
+.nav-link-custom {
+    color: #cbd5e0;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    padding: 5px 10px;
+    border-radius: 20px;
+}
+
+.nav-link-custom:hover {
+    color: #ffffff;
+    background: rgba(0, 123, 255, 0.1);
+}
+
+.footer-info .badge {
+    /* Badge de información con espaciado de letras */
+    font-weight: 400;
+    letter-spacing: 1px;
+    padding: 6px 12px;
+}

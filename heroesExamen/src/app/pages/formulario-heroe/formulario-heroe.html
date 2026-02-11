@@ -1,96 +1,107 @@
+<!-- Formulario de Creación/Edición (Usa Reactive Forms) -->
 <div class="container mt-5 mb-5">
     <div class="card shadow">
+        <!-- Título dinámico según el modo del componente -->
         <div class="card-header bg-primary text-white">
-            <h3>{{ isEditMode ? 'Edit Hero' : 'Create New Hero' }}</h3>
+            <h3>{{ isEditMode ? 'Editar Héroe' : 'Crear Nuevo Héroe' }}</h3>
         </div>
+
         <div class="card-body">
+            <!-- Vinculación con [formGroup] definido en el TypeScript -->
             <form [formGroup]="heroForm" (ngSubmit)="submit()">
 
+                <!-- Sección: Datos Básicos -->
                 <div class="row mb-3">
                     <div class="col-md-6">
-                        <label class="form-label">Hero Name</label>
-                        <input type="text" class="form-control" formControlName="heroname" placeholder="e.g. Superman">
+                        <label class="form-label">Nombre del Héroe</label>
+                        <input type="text" class="form-control" formControlName="heroname" placeholder="ej. Superman">
                     </div>
                     <div class="col-md-6">
-                        <label class="form-label">Full Name</label>
-                        <input type="text" class="form-control" formControlName="fullname"
-                            placeholder="e.g. Clark Kent">
+                        <label class="form-label">Nombre Real</label>
+                        <input type="text" class="form-control" formControlName="fullname" placeholder="ej. Clark Kent">
                     </div>
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label">Gender</label>
+                    <label class="form-label">Género</label>
                     <select class="form-select" formControlName="gender">
-                        <option value="">Select Gender</option>
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                        <option value="Other">Other</option>
+                        <option value="">Selecciona Género</option>
+                        <option value="Male">Masculino</option>
+                        <option value="Female">Femenino</option>
+                        <option value="Other">Otro</option>
                     </select>
                 </div>
 
                 <div class="row mb-3">
                     <div class="col-md-6">
-                        <label class="form-label">Race</label>
-                        <input type="text" class="form-control" formControlName="race" placeholder="e.g. Kryptonian">
+                        <label class="form-label">Raza</label>
+                        <input type="text" class="form-control" formControlName="race" placeholder="ej. Kriptoniano">
                     </div>
                     <div class="col-md-6">
-                        <label class="form-label">Alignment</label>
+                        <label class="form-label">Alineación</label>
                         <select class="form-select" formControlName="alignment">
-                            <option value="">Select Alignment</option>
-                            <option value="good">Good</option>
-                            <option value="bad">Bad</option>
+                            <option value="">Selecciona Alineación</option>
+                            <option value="good">Bueno</option>
+                            <option value="bad">Malo</option>
                             <option value="neutral">Neutral</option>
                         </select>
                     </div>
                 </div>
 
-                <h5 class="mt-4 border-bottom pb-2">Images</h5>
+                <!-- Sección: Gestión de URLs de Imágenes -->
+                <h5 class="mt-4 border-bottom pb-2">Imágenes</h5>
                 <div class="mb-3">
-                    <label class="form-label">Image 1 URL (Main)</label>
-                    <input type="text" class="form-control" formControlName="image1">
+                    <label class="form-label">URL Imagen 1 (Principal)</label>
+                    <input type="text" class="form-control" formControlName="image1"
+                        placeholder="https://ejemplo.com/imagen1.jpg">
                 </div>
                 <div class="mb-3">
-                    <label class="form-label">Image 2 URL</label>
-                    <input type="text" class="form-control" formControlName="image2">
+                    <label class="form-label">URL Imagen 2</label>
+                    <input type="text" class="form-control" formControlName="image2"
+                        placeholder="https://ejemplo.com/imagen2.jpg">
                 </div>
                 <div class="mb-3">
-                    <label class="form-label">Image 3 URL</label>
-                    <input type="text" class="form-control" formControlName="image3">
+                    <label class="form-label">URL Imagen 3</label>
+                    <input type="text" class="form-control" formControlName="image3"
+                        placeholder="https://ejemplo.com/imagen3.jpg">
                 </div>
 
-                <h5 class="mt-4 border-bottom pb-2">Powerstats (0-100)</h5>
+                <!-- Sección: Estadísticas (Grupo anidado formGroupName) -->
+                <h5 class="mt-4 border-bottom pb-2">Estadísticas de Poder (0-100)</h5>
                 <div formGroupName="powerstats">
                     <div class="row g-3">
                         <div class="col-md-4">
-                            <label class="form-label">Intelligence</label>
+                            <label class="form-label">Inteligencia</label>
                             <input type="number" class="form-control" formControlName="intelligence" min="0" max="100">
                         </div>
                         <div class="col-md-4">
-                            <label class="form-label">Strength</label>
+                            <label class="form-label">Fuerza</label>
                             <input type="number" class="form-control" formControlName="strength" min="0" max="100">
                         </div>
                         <div class="col-md-4">
-                            <label class="form-label">Speed</label>
+                            <label class="form-label">Velocidad</label>
                             <input type="number" class="form-control" formControlName="speed" min="0" max="100">
                         </div>
                         <div class="col-md-4">
-                            <label class="form-label">Durability</label>
+                            <label class="form-label">Durabilidad</label>
                             <input type="number" class="form-control" formControlName="durability" min="0" max="100">
                         </div>
                         <div class="col-md-4">
-                            <label class="form-label">Power</label>
+                            <label class="form-label">Poder</label>
                             <input type="number" class="form-control" formControlName="power" min="0" max="100">
                         </div>
                         <div class="col-md-4">
-                            <label class="form-label">Combat</label>
+                            <label class="form-label">Combate</label>
                             <input type="number" class="form-control" formControlName="combat" min="0" max="100">
                         </div>
                     </div>
                 </div>
 
+                <!-- Acciones finales del formulario -->
                 <div class="mt-4 d-flex justify-content-end">
-                    <a routerLink="/home" class="btn btn-secondary me-2">Cancel</a>
-                    <button type="submit" class="btn btn-primary" [disabled]="heroForm.invalid">Save Hero</button>
+                    <a routerLink="/home" class="btn btn-secondary me-2">Cancelar</a>
+                    <!-- Se deshabilita si los validadores de Angular fallan -->
+                    <button type="submit" class="btn btn-primary" [disabled]="heroForm.invalid">Guardar Héroe</button>
                 </div>
             </form>
         </div>

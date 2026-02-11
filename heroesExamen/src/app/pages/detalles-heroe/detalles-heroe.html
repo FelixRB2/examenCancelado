@@ -1,56 +1,79 @@
-<div class="container mt-5" *ngIf="hero">
+<!-- Vista de Detalles del Héroe (Renderizado condicional con @if) -->
+@if (hero) {
+<div class="container mt-5">
     <div class="card shadow-lg">
         <div class="row g-0">
+            <!-- Columna Izquierda: Galería de imágenes (Carousel de Bootstrap) -->
             <div class="col-md-4">
                 <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner">
-                        <div class="carousel-item active" *ngIf="hero.image1">
+                        <!-- Iteración condicional para mostrar solo las imágenes existentes -->
+                        @if (hero.image1) {
+                        <div class="carousel-item active">
                             <img [src]="hero.image1" class="d-block w-100 rounded-start" alt="{{hero.heroname}}"
                                 style="height: 500px; object-fit: cover;">
                         </div>
-                        <div class="carousel-item" *ngIf="hero.image2">
+                        }
+                        @if (hero.image2) {
+                        <div class="carousel-item">
                             <img [src]="hero.image2" class="d-block w-100 rounded-start" alt="{{hero.heroname}}"
                                 style="height: 500px; object-fit: cover;">
                         </div>
-                        <div class="carousel-item" *ngIf="hero.image3">
+                        }
+                        @if (hero.image3) {
+                        <div class="carousel-item">
                             <img [src]="hero.image3" class="d-block w-100 rounded-start" alt="{{hero.heroname}}"
                                 style="height: 500px; object-fit: cover;">
                         </div>
+                        }
                     </div>
+                    <!-- Controles del carrusel -->
                     <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel"
                         data-bs-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
+                        <span class="visually-hidden">Anterior</span>
                     </button>
                     <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel"
                         data-bs-slide="next">
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
+                        <span class="visually-hidden">Siguiente</span>
                     </button>
                 </div>
             </div>
+
+            <!-- Columna Derecha: Información y Estadísticas -->
             <div class="col-md-8">
                 <div class="card-body">
+                    <!-- Títulos principales -->
                     <h1 class="card-title display-4 text-primary">{{hero.heroname}}</h1>
                     <h4 class="text-muted mb-4">{{hero.fullname}}</h4>
 
+                    <!-- Datos Generales -->
                     <div class="row mb-4">
                         <div class="col-md-6">
-                            <p><strong>Gender:</strong> {{hero.gender}}</p>
-                            <p><strong>Race:</strong> {{hero.race}}</p>
+                            <p><strong>Género:</strong> {{hero.gender}}</p>
+                            <p><strong>Raza:</strong> {{hero.race}}</p>
                         </div>
                         <div class="col-md-6">
-                            <p><strong>Alignment:</strong> <span class="badge"
-                                    [class.bg-success]="hero.alignment === 'good'"
+                            <p><strong>Alineación:</strong>
+                                <!-- Badge con color dinámico según la alineación -->
+                                <span class="badge" [class.bg-success]="hero.alignment === 'good'"
                                     [class.bg-danger]="hero.alignment === 'bad'"
-                                    [class.bg-secondary]="hero.alignment === 'neutral'">{{hero.alignment}}</span></p>
+                                    [class.bg-secondary]="hero.alignment === 'neutral'">
+                                    {{hero.alignment === 'good' ? 'Bueno' : (hero.alignment === 'bad' ? 'Malo' :
+                                    'Neutral')}}
+                                </span>
+                            </p>
                         </div>
                     </div>
 
-                    <h3 class="mb-3">Powerstats</h3>
+                    <!-- Visualización de Powerstats mediante Barras de Progreso -->
+                    @if (hero.powerstats) {
+                    <h3 class="mb-3">Estadísticas de Poder</h3>
 
+                    <!-- Cada estadística usa una clase de color de Bootstrap distinta -->
                     <div class="mb-2">
-                        <label>Intelligence</label>
+                        <label>Inteligencia</label>
                         <div class="progress">
                             <div class="progress-bar bg-info" role="progressbar"
                                 [style.width.%]="hero.powerstats.intelligence"
@@ -59,7 +82,7 @@
                         </div>
                     </div>
                     <div class="mb-2">
-                        <label>Strength</label>
+                        <label>Fuerza</label>
                         <div class="progress">
                             <div class="progress-bar bg-danger" role="progressbar"
                                 [style.width.%]="hero.powerstats.strength"
@@ -68,7 +91,7 @@
                         </div>
                     </div>
                     <div class="mb-2">
-                        <label>Speed</label>
+                        <label>Velocidad</label>
                         <div class="progress">
                             <div class="progress-bar bg-warning" role="progressbar"
                                 [style.width.%]="hero.powerstats.speed" [attr.aria-valuenow]="hero.powerstats.speed"
@@ -76,7 +99,7 @@
                         </div>
                     </div>
                     <div class="mb-2">
-                        <label>Durability</label>
+                        <label>Durabilidad</label>
                         <div class="progress">
                             <div class="progress-bar bg-success" role="progressbar"
                                 [style.width.%]="hero.powerstats.durability"
@@ -85,7 +108,7 @@
                         </div>
                     </div>
                     <div class="mb-2">
-                        <label>Power</label>
+                        <label>Poder</label>
                         <div class="progress">
                             <div class="progress-bar bg-primary" role="progressbar"
                                 [style.width.%]="hero.powerstats.power" [attr.aria-valuenow]="hero.powerstats.power"
@@ -93,20 +116,28 @@
                         </div>
                     </div>
                     <div class="mb-2">
-                        <label>Combat</label>
+                        <label>Combate</label>
                         <div class="progress">
                             <div class="progress-bar bg-dark" role="progressbar"
                                 [style.width.%]="hero.powerstats.combat" [attr.aria-valuenow]="hero.powerstats.combat"
                                 aria-valuemin="0" aria-valuemax="100">{{hero.powerstats.combat}}%</div>
                         </div>
                     </div>
+                    } @else {
+                    <!-- Mensaje de aviso si no hay datos de poder vinculados -->
+                    <div class="alert alert-light border">
+                        <p class="mb-0 text-muted"><em>No hay estadísticas disponibles para este héroe.</em></p>
+                    </div>
+                    }
 
+                    <!-- Botones de navegación y edición -->
                     <div class="mt-4">
-                        <a routerLink="/home" class="btn btn-outline-secondary">Back to List</a>
-                        <a [routerLink]="['/home/formulario', hero.id]" class="btn btn-warning ms-2">Edit Hero</a>
+                        <a routerLink="/home" class="btn btn-outline-secondary">Volver al Listado</a>
+                        <a [routerLink]="['/home/formulario', hero.id]" class="btn btn-warning ms-2">Editar Héroe</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+}
